@@ -1,0 +1,113 @@
+Algoritmo ServiRutaExpress
+	
+	// 1. DECLARACIÓN DE VARIABLES
+	// Sirve para reservar el espacio en memoria e indicar qué tipo de datos contendrán.
+	Definir cantidad_vehiculos, contador, tipo_vehiculo, cant_motos, cant_autos Como Entero
+	Definir monto_insumos, cobro_base, costo_total, descuento, total_final Como Real
+	Definir recaudo_total, total_descuentos, promedio_recaudo Como Real
+	
+	// 2. INICIALIZACIÓN DE ACUMULADORES Y CONTADORES
+	// Es indispensable inicializar en 0 las variables que sumarán valores en cada vuelta del ciclo.
+	recaudo_total <- 0.0
+	total_descuentos <- 0.0
+	cant_motos <- 0
+	cant_autos <- 0
+	
+	// 3. APERTURA DE TURNO (CAPTURA Y VALIDACIÓN CON HACER-MIENTRAS / REPETIR)
+	// La guía especifica usar un ciclo 'Repetir' para obligar al usuario a ingresar un valor válido (>0).
+	Repetir
+		Escribir "=== APERTURA DE TURNO - SERVIRUTA EXPRESS ==="
+		Escribir "Ingrese la cantidad total de vehiculos a atender en el turno (N > 0):"
+		Leer cantidad_vehiculos
+		
+		Si cantidad_vehiculos <= 0 Entonces
+			Escribir "[ERROR] El numero de vehiculos debe ser un entero positivo. Intente nuevamente."
+		FinSi
+	Hasta Que cantidad_vehiculos > 0
+	
+	// 4. CICLO DE PROCESAMIENTO (CICLO PARA / FOR)
+	// Se utiliza 'Para' porque conocemos exactamente cuántos vehículos (N) se van a procesar.
+	Para contador <- 1 Hasta cantidad_vehiculos Con Paso 1 Hacer
+		
+		Escribir ""
+		Escribir "--------------------------------------------"
+		Escribir "REGISTRO DE ATENCION DE VEHICULO ", contador, " DE ", cantidad_vehiculos
+		Escribir "--------------------------------------------"
+		
+		// Validación del Tipo de Vehículo (1: Moto, 2: Auto) usando ciclo Mientras
+		Escribir "Seleccione el tipo de vehiculo (1: Motocicleta | 2: Automovil):"
+		Leer tipo_vehiculo
+		
+		Mientras tipo_vehiculo <> 1 Y tipo_vehiculo <> 2 Hacer
+			Escribir "[ERROR] Opcion invalida. Ingrese 1 para Motocicleta o 2 para Automovil:"
+			Leer tipo_vehiculo
+		FinMientras
+		
+		// Validación del Monto en Insumos utilizando ciclo Mientras
+		// El cliente puede consumir 0.0, pero no montos negativos.
+		Escribir "Ingrese el monto gastado en insumos y lubricantes ($):"
+		Leer monto_insumos
+		
+		Mientras monto_insumos < 0.0 Hacer
+			Escribir "[ERROR] El monto no puede ser negativo. Ingrese un valor valido (>= 0.0):"
+			Leer monto_insumos
+		FinMientras
+		
+		// 5. ESTRUCTURA TARIFARIA Y CÁLCULOS (ESTRUCTURA CONDICIONAL SI-ENTONCES)
+		// Determinación del valor fijo de mano de obra y conteo por categoría.
+		Si tipo_vehiculo == 1 Entonces
+			cobro_base <- 25000.0
+			cant_motos <- cant_motos + 1
+		Sino
+			cobro_base <- 45000.0
+			cant_autos <- cant_autos + 1
+		FinSi
+		
+		// Cálculo del Subtotal inicial
+		costo_total <- cobro_base + monto_insumos
+		
+		// Evaluación de descuento especial (10% si supera $150.000)
+		Si costo_total > 150000.0 Entonces
+			descuento <- costo_total * 0.10
+			Escribir "-> ¡Aplica Descuento del 10% por compra superior a $150.000!"
+		Sino
+			descuento <- 0.0
+			Escribir "-> No aplica descuento."
+		FinSi
+		
+		// Cálculo del total final a facturar por el vehículo
+		total_final <- costo_total - descuento
+		
+		// Muestra de liquidación individual
+		Escribir "  + Mano de obra base: $", cobro_base
+		Escribir "  + Insumos: $", monto_insumos
+		Escribir "  - Descuento aplicado: $", descuento
+		Escribir "  = TOTAL FACTURADO: $", total_final
+		
+		// 6. ACUMULACIÓN DE ESTADÍSTICAS DEL TURNO
+		// Suma de montos a los totales generales
+		recaudo_total <- recaudo_total + total_final
+		total_descuentos <- total_descuentos + descuento
+		
+	FinPara
+	
+	// 7. CIERRE DE TURNO Y REPORTE FINAL
+	// Cálculo del promedio general recaudado por vehículo
+	promedio_recaudo <- recaudo_total / cantidad_vehiculos
+	
+	// Impresión del resumen final en pantalla
+	Escribir ""
+	Escribir "============================================="
+	Escribir "         REPORTE DE CIERRE DE TURNO          "
+	Escribir "             SERVIRUTA EXPRESS               "
+	Escribir "============================================="
+	Escribir " Total de vehiculos procesados : ", cantidad_vehiculos
+	Escribir "  - Motocicletas atendidas     : ", cant_motos
+	Escribir "  - Automoviles atendidos      : ", cant_autos
+	Escribir "---------------------------------------------"
+	Escribir " Recaudo Total Neto del Taller : $", recaudo_total
+	Escribir " Total Otorgado en Descuentos  : $", total_descuentos
+	Escribir " Promedio de Recaudo/Vehiculo  : $", promedio_recaudo
+	Escribir "============================================="
+	
+FinAlgoritmo

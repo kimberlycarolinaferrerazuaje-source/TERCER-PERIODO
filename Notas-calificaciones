@@ -1,0 +1,89 @@
+Algoritmo SistemaCalificaciones
+
+Definir opcion, total, apr, rec, rep Como Entero
+Definir n1, n2, n3, nota, suma, prom Como Real
+
+total <- 0
+apr <- 0
+rec <- 0
+rep <- 0
+suma <- 0
+
+Repetir
+
+    Escribir "1. Registrar estudiante"
+    Escribir "2. Ver estadisticas"
+    Escribir "3. Salir"
+    Leer opcion
+
+    Segun opcion Hacer
+
+        1:
+            Escribir "Nota 1:"
+            Leer n1
+
+            Mientras n1 < 0 O n1 > 5 Hacer
+                Escribir "Nota invalida. Ingrese nuevamente:"
+                Leer n1
+            FinMientras
+
+            Escribir "Nota 2:"
+            Leer n2
+
+            Mientras n2 < 0 O n2 > 5 Hacer
+                Escribir "Nota invalida. Ingrese nuevamente:"
+                Leer n2
+            FinMientras
+
+            Escribir "Nota 3:"
+            Leer n3
+
+            Mientras n3 < 0 O n3 > 5 Hacer
+                Escribir "Nota invalida. Ingrese nuevamente:"
+                Leer n3
+            FinMientras
+
+            nota <- n1 * 0.3 + n2 * 0.3 + n3 * 0.4
+
+            total <- total + 1
+            suma <- suma + nota
+
+            Escribir "Nota final: ", nota
+
+            Si nota >= 3 Entonces
+                Escribir "Aprobado"
+                apr <- apr + 1
+            SiNo
+                Si nota >= 2 Entonces
+                    Escribir "En recuperacion"
+                    rec <- rec + 1
+                SiNo
+                    Escribir "Reprobado"
+                    rep <- rep + 1
+                FinSi
+            FinSi
+
+        2:
+            Escribir "Total estudiantes: ", total
+            Escribir "Aprobados: ", apr
+            Escribir "En recuperacion: ", rec
+            Escribir "Reprobados: ", rep
+
+            Si total > 0 Entonces
+                prom <- suma / total
+                Escribir "Promedio general: ", prom
+            SiNo
+                Escribir "No hay notas registradas"
+            FinSi
+
+        3:
+            Escribir "Cerrando sistema..."
+
+        De Otro Modo:
+            Escribir "Opcion invalida"
+
+    FinSegun
+
+Hasta Que opcion = 3
+
+FinAlgoritmo

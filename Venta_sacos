@@ -1,0 +1,69 @@
+Algoritmo venta_sacos
+
+Definir recaudo_total, subtotal, descuento, total Como Real
+Definir stock_inicial, stock_actual, cantidad, opcion Como Entero
+
+recaudo_total <- 0
+
+Escribir "Sacos iniciales:"
+Leer stock_inicial
+
+Mientras stock_inicial <= 0 Hacer
+    Escribir "Invalido, reingresar:"
+    Leer stock_inicial
+FinMientras
+
+stock_actual <- stock_inicial
+
+Repetir
+
+    Escribir "1. Venta"
+    Escribir "2. Consultar"
+    Escribir "3. Salir"
+    Leer opcion
+
+    Segun opcion Hacer
+
+        1:
+            Escribir "Cantidad:"
+            Leer cantidad
+
+            Si cantidad <= 0 Entonces
+                Escribir "Invalida"
+            SiNo
+                Si cantidad > stock_actual Entonces
+                    Escribir "Sin stock"
+                SiNo
+                    subtotal <- cantidad * 85000
+
+                    Si cantidad >= 10 Entonces
+                        descuento <- subtotal * 0.08
+                    SiNo
+                        descuento <- 0
+                    FinSi
+
+                    total <- subtotal - descuento
+                    recaudo_total <- recaudo_total + total
+                    stock_actual <- stock_actual - cantidad
+
+                    Escribir "Total: $", total
+                    Escribir "Disponibles: ", stock_actual
+                FinSi
+            FinSi
+
+        2:
+            Escribir "Total recaudado = $", recaudo_total
+            Escribir "Restantes = ", stock_actual
+
+        3:
+            Escribir "Total recaudado = $", recaudo_total
+            Escribir "Restantes = ", stock_actual
+
+        De Otro Modo:
+            Escribir "Opcion invalida"
+
+    FinSegun
+
+Hasta Que opcion = 3
+
+FinAlgoritmo
